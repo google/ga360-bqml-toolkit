@@ -4,7 +4,7 @@ WITH
   min(case when totals.transactions >= 1 then visitStartTime end) as event_session, -- Find the visit start time of the first target event; if you want the most recent, change to max()
   min(case when totals.transactions >= 1 then date end) as event_date, --  Find the date of the first target event; if you want the most recent, change to max()
   max(case when totals.transactions >= 1 then 1 else 0 end) as label -- Label each user based on the target or not
-  from `{ga_data_ref}*` a
+  from `{ga_data_ref}` a
   where 
   _TABLE_SUFFIX BETWEEN '{start_date}' AND '{end_date}'
   AND geoNetwork.Country="United States"
@@ -19,7 +19,7 @@ WITH
     SELECT c.clientId,c.metro, ROW_NUMBER() OVER (PARTITION BY c.clientId ORDER BY visits DESC) AS row_num
     FROM (
       SELECT a.clientId, geoNetwork.metro AS metro, COUNT(*) AS visits
-      FROM `{ga_data_ref}*` a
+      FROM `{ga_data_ref}` a
       left join visitors_labeled b
       on a.clientId = b.clientId
       where 
@@ -56,7 +56,7 @@ WITH
               ELSE TIMESTAMP_ADD(TIMESTAMP_SECONDS(visitStartTime), INTERVAL c.timezone HOUR)
               END ) ) AS hour_of_day_localized,
           totals.pageviews AS pageviews
-        FROM `{ga_data_ref}*` a
+        FROM `{ga_data_ref}` a
         LEFT JOIN ( SELECT states.*
                     FROM UNNEST ([STRUCT("Alaska" as state_name, -9 as timezone, 1 as dst),
                       STRUCT("American Samoa" as state_name, -10 as timezone, 0 as dst),
@@ -137,7 +137,7 @@ WITH
     SELECT clientId, day, ROW_NUMBER() OVER (PARTITION BY clientId ORDER BY pages_viewed DESC) AS row_num
     FROM (
       SELECT a.clientId, EXTRACT(DAYOFWEEK FROM PARSE_DATE('%Y%m%d',date)) AS day, SUM(totals.pageviews) AS pages_viewed
-      FROM `{ga_data_ref}*` a
+      FROM `{ga_data_ref}` a
       left join visitors_labeled b
       on a.clientId = b.clientId
       where 
@@ -171,7 +171,7 @@ max(case when trafficSource.medium = 'affiliate' then 1 else 0 end) as visits_tr
 max(case when trafficSource.medium = 'referral' then 1 else 0 end) as visits_traffic_source_referral,
 count(distinct geoNetwork.metro) as distinct_dmas,
 count(distinct EXTRACT(DAYOFWEEK FROM PARSE_DATE('%Y%m%d', date))) as num_diff_days_visited
-from `{ga_data_ref}*` a
+from `{ga_data_ref}` a
 left join visitors_labeled b
 on a.clientId = b.clientId
 where 
