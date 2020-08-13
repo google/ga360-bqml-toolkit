@@ -146,7 +146,7 @@ WITH
       and (a.visitStartTime < IFNULL(event_session, 0)
       or event_session is null)
       GROUP BY clientId, day ) )
-  WHERE row_num = 1 ),
+  WHERE row_num = 1 )
 
 -- Join tables defined above onto session data
 select z.*, b.dma as visited_dma,

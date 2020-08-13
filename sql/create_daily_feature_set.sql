@@ -131,7 +131,7 @@ WITH visitors_to_update as (
   _TABLE_SUFFIX BETWEEN '{start_date}' AND '{end_date}'
   AND geoNetwork.Country="United States"
       GROUP BY clientId, day ) )
-  WHERE row_num = 1 ),
+  WHERE row_num = 1 )
 
 -- Join tables defined above onto session data
 select z.*, b.dma as visited_dma,
