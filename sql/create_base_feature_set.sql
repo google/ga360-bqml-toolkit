@@ -1,3 +1,8 @@
+-- Note that this query aggregates behavior on a user level without concern for when the behvior occured within
+-- the time period given. Due to the nature of how converters vs. non-converters are labeled and aggregatd,
+-- this may introduce some bias into the model. This model was written with the goal of of balancing simplicity, 
+-- efficiency and robustness of the model, and as such, your mileage may vary depending on your specific use case.
+
 WITH 
   visitors_labeled as ( 
   select clientId, 

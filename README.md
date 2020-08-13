@@ -16,8 +16,7 @@ For more on BQML, see the
 
 The `sql` folder contains sample scripts, some of which are utilized in `create_and_run_queries.py`.
 Most importantly, `create_daily_feature_set.sql` creates generalizable features at the user-level,
-which are then used for predicting future behavior.
-More detailed documentation can be found in the docs referenced above.
+which are then used for predicting future behavior. 
 
 ### Python script
 
