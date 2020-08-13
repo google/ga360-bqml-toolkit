@@ -4,7 +4,7 @@ WITH
   min(case when totals.transactions >= 1 then visitStartTime end) as event_session, -- Find the visit start time of the first target event; if you want the most recent, change to max()
   min(case when totals.transactions >= 1 then date end) as event_date, --  Find the date of the first target event; if you want the most recent, change to max()
   max(case when totals.transactions >= 1 then 1 else 0 end) as label -- Label each user based on the target or not
-  from `<ga_data_ref>*` a
+  from `{ga_data_ref}*` a
   where 
   _TABLE_SUFFIX BETWEEN '{start_date}' AND '{end_date}'
   AND geoNetwork.Country="United States"
