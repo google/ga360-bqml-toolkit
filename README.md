@@ -1,7 +1,10 @@
-# GA360/BQML Toolkit
+i# BQML Toolkit
 
+The goal of this toolkit is to jumpstart the process of creating propensity
+models in BQML. The toolkit provides templated SQL queries to generate feature
+sets and models.
 
-*Objective*: Provide out of the box and sample code to understand user behavior and build models (with BQML) based on data from the Google Analytics 360 BigQuery Export.
+(TODO) - samchu@ - add more info on why clients would use these models
 
 This is not meant to be an exhaustive solution or cover every use case. No two
 models are the same, so you should tweak with your own timelines and business
@@ -35,14 +38,17 @@ what the use cases for that would be)
 
 ### Running the Python script
 
-To run, you need a few pieces of information: 
-* `project_id`: the ID of your GCP project 
-* `ga_dataset`: the BigQuery dataset where you have stored your GA export
-data 
-* `ga_table_prefix`: the prefix of the BigQuery table where you stored your
-GA export data (This should be a set of partitioned tables. The script is
-already set up to pass in a wildcard so that it will read in all the partitioned
-tables)
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
+
+*Before you run the script, create a dataset in your project called
+"GA360_BQML".*
+
+To run, you need a few pieces of information: * `project_id`: the ID of your GCP
+project * `ga_dataset`: the BigQuery dataset where you have stored your GA
+export data * `ga_table_prefix`: the prefix of the BigQuery table where you
+stored your GA export data (This should be a set of partitioned tables. The
+script is already set up to pass in a wildcard so that it will read in all the
+partitioned tables)
 
 Then, run this command in Cloud Shell: `python3 create_queries.py [project_id]
 [ga_dataset] [ga_table_prefix]`
@@ -55,3 +61,4 @@ parameters). Simply edit the parameters at the beginning of the file.
 Now that you have your BQML model set up, the next step is activation. Check out
 [Project Modem](https://github.com/google/modem) if you would like to create an
 automated pipeline for activating the data from your model.
+
