@@ -33,7 +33,7 @@ model_sql_path = "{}/sql/train_logistic_regression.sql".format(working_directory
 current_timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M")
 
 # Default outputs for datasets and tables. Update these if you want.
-feature_set_dataset = "ComcastGA360"
+feature_set_dataset = "GA360_BQML"
 feature_set_table = "Base_Feature_Set_{}".format(current_timestamp)
 
 # Base Feature Set parameters. This defaults to a one-year lookback and a 30-day scoring window
@@ -43,7 +43,7 @@ days_to_score = "30"
 
 # Model parameters
 remove_fields = "ClientId"
-model_dataset = "ComcastGA360"
+model_dataset = "GA360_BQML"
 model_destination_table = "BQML_Model_Output_{}".format(current_timestamp)
 model_name = "{}.BQML_Model_{}".format(model_dataset, current_timestamp)
 
