@@ -32,20 +32,16 @@ model_sql_path = "{}/sql/train_logistic_regression.sql".format(working_directory
 # Current timestamp (used to generate table names)
 current_timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M")
 
-# Default outputs for datasets and tables. Update these if you want.
-feature_set_dataset = "GA360_BQML"
+# Base Feature Set default parameters. This defaults to a one-year lookback and a 30-day scoring window
 feature_set_table = "Base_Feature_Set_{}".format(current_timestamp)
-
-# Base Feature Set parameters. This defaults to a one-year lookback and a 30-day scoring window
 start_date = "`{}`".format(datetime.now().strftime('%Y-%m-%d'))
 end_date = "`{}`".format((datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'))
 days_to_score = "30"
 
-# Model parameters
+# Model default parameters
 remove_fields = "ClientId"
-model_dataset = "GA360_BQML"
 model_destination_table = "BQML_Model_Output_{}".format(current_timestamp)
-model_name = "{}.BQML_Model_{}".format(model_dataset, current_timestamp)
+model_name = "BQML_Model_{}".format(current_timestamp)
 
 def parse(argv):
   parser = argparse.ArgumentParser(description='Accept Project ID, GA360 dataset, and GA360 Table.')
@@ -68,7 +64,7 @@ def create_and_run_feature_set_query(client, sql, ga_table_ref, destination_tabl
 
   print("Query results loaded to the table {}".format(destination_table))
 
-def create_and_run_model_query(client, sql, feature_set_table_ref):
+def create_and_run_model_query(client, sql, feature_set_table_ref, model_name):
   sql = str(sql).replace("{model_name}", model_name).replace("{remove_fields}", remove_fields).replace("{training_set}", feature_set_table_ref)
   job_config = bigquery.QueryJobConfig()
   query_job = client.query(sql, job_config=job_config)  # Make an API request.
@@ -85,8 +81,8 @@ def main(argv):
 
   # Construct table references
   ga_table_ref = "{}.{}.{}_*".format(project_id,ga_dataset,ga_table)
-  feature_set_table_ref = "{}.{}.{}".format(project_id,feature_set_dataset,feature_set_table)
-  model_table_ref = "{}.{}.{}".format(project_id,model_dataset,model_destination_table)
+  feature_set_table_ref = "{}.{}.{}".format(project_id,ga_dataset,feature_set_table)
+  full_model_name = "{}.{}".format(ga_dataset,model_name)
 
   # Construct a BigQuery client object.
   client = bigquery.Client(project=project_id)
@@ -99,7 +95,7 @@ def main(argv):
   # Create model query and execute
   model_sql = read_query_from_file(model_sql_path)
   print("Model SQL has been read in")
-  print(create_and_run_model_query(client, model_sql, feature_set_table_ref))
+  print(create_and_run_model_query(client, model_sql, feature_set_table_ref, full_model_name))
 
 if __name__ == "__main__":
   main(sys.argv)
