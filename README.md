@@ -1,4 +1,4 @@
-i# BQML Toolkit
+# BQML Toolkit
 
 The goal of this toolkit is to jumpstart the process of creating propensity
 models in BQML. The toolkit provides templated SQL queries to generate feature
@@ -42,11 +42,15 @@ Alternatively, you can use publicly available data by following directions [here
 what the use cases for that would be)
 
 ### Running the Python script
-
+If you want to run on Cloud Shell, click the button below to deploy. You will
+need to run `gcloud init login` to make sure your credentials are up to date. 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
-*Before you run the script, create a dataset in your project called
-"GA360_BQML".*
+If you want to run in your own environment, you will need to set up
+authentication. Follow [the steps outlined
+here](https://cloud.google.com/docs/authentication/production#create_service_account) to create a service account and
+save it in your environment. Then you will need to add these credentials as an
+environment variable.
 
 To run, you need a few pieces of information: * `project_id`: the ID of your GCP
 project * `ga_dataset`: the BigQuery dataset where you have stored your GA

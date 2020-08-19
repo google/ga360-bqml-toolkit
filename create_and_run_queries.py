@@ -34,8 +34,8 @@ current_timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M")
 
 # Base Feature Set default parameters. This defaults to a one-year lookback and a 30-day scoring window
 feature_set_table = "Base_Feature_Set_{}".format(current_timestamp)
-start_date = "`{}`".format(datetime.now().strftime('%Y-%m-%d'))
-end_date = "`{}`".format((datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'))
+end_date = "`{}`".format(datetime.now().strftime('%Y-%m-%d'))
+start_date = "`{}`".format((datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'))
 days_to_score = "30"
 
 # Model default parameters
