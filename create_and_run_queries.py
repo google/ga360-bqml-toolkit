@@ -34,12 +34,12 @@ current_timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M")
 
 # Base Feature Set default parameters. This defaults to a one-year lookback and a 30-day scoring window
 feature_set_table = "Base_Feature_Set_{}".format(current_timestamp)
-end_date = "`{}`".format(datetime.now().strftime('%Y%m%d'))
-start_date = "`{}`".format((datetime.now() - timedelta(days=365)).strftime('%Y%m%d'))
+end_date = "{}".format(datetime.now().strftime('%Y%m%d'))
+start_date = "{}".format((datetime.now() - timedelta(days=365)).strftime('%Y%m%d'))
 days_to_score = "30"
 
 # Model default parameters
-remove_fields = "ClientId"
+remove_fields = "ClientId" # Comma-separated list of fields to remove from model
 model_destination_table = "BQML_Model_Output_{}".format(current_timestamp)
 model_name = "BQML_Model_{}".format(current_timestamp)
 
@@ -77,10 +77,15 @@ def main(argv):
   project_id = args.project_id
   ga_dataset = args.ga_dataset
 
-  # Construct table references
-  ga_table_ref = "{}.{}.ga_sessions_*".format(project_id,ga_dataset)
-  feature_set_table_ref = "{}.{}.{}".format(project_id,ga_dataset,feature_set_table)
-  full_model_name = "{}.{}.{}".format(project_id,ga_dataset,model_name)
+  # Construct table references: 
+  # GA360 BQ Export location
+  ga_table_ref = "{}.{}.ga_sessions_*".format(project_id,ga_dataset) 
+
+  # Location to save feature set
+  feature_set_table_ref = "{}.{}.{}".format(project_id,ga_dataset,feature_set_table) 
+  
+  # Location to save BQML Model
+  full_model_name = "{}.{}.{}".format(project_id,ga_dataset,model_name) 
 
   # Construct a BigQuery client object.
   client = bigquery.Client(project=project_id)

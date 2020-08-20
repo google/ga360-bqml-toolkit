@@ -8,6 +8,6 @@ FROM
       *
     FROM
       `{daily_users_table}`) ) z,
-  UNNEST(predicted_<label column>_probs) AS pred
+  UNNEST(predicted_label_probs) AS pred
 WHERE
   pred.label = 1
