@@ -52,7 +52,9 @@ Here are some suggested additions that can be made to the feature set:
 
 BQML also allows for an increasing number of ML models by simply using SQL-like syntax.
 It is suggested that for models used in production, the user adjust BQML parameters,
-and/or test different BQML models to optimize performance.
+and/or test different BQML models to optimize performance. It is common that there
+are severely unbalanced classes for these use cases, so it is also recommended to incorporate
+[class weights](https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-create#training_a_multiclass_logistic_regression_model_with_specified_weights)
 
 ### Running the Python script
 If you want to run on Cloud Shell, click the button below to deploy. You will
