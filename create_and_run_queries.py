@@ -34,8 +34,8 @@ current_timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M")
 
 # Base Feature Set default parameters. This defaults to a one-year lookback and a 30-day scoring window
 feature_set_table = "Base_Feature_Set_{}".format(current_timestamp)
-end_date = "`{}`".format(datetime.now().strftime('%Y-%m-%d'))
-start_date = "`{}`".format((datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'))
+end_date = "`{}`".format(datetime.now().strftime('%Y%m%d'))
+start_date = "`{}`".format((datetime.now() - timedelta(days=365)).strftime('%Y%m%d'))
 days_to_score = "30"
 
 # Model default parameters
@@ -44,10 +44,9 @@ model_destination_table = "BQML_Model_Output_{}".format(current_timestamp)
 model_name = "BQML_Model_{}".format(current_timestamp)
 
 def parse(argv):
-  parser = argparse.ArgumentParser(description='Accept Project ID, GA360 dataset, and GA360 Table.')
+  parser = argparse.ArgumentParser(description='Accepts Project ID and GA360 dataset.')
   parser.add_argument('project_id', type=str, help='Your GCP Project ID')
   parser.add_argument('ga_dataset', type=str, help='The dataset where you have your GA360 data')
-  parser.add_argument('ga_table', type=str, help='The table where you have your GA360 data')
   args = parser.parse_args()
   return args
 
@@ -77,12 +76,11 @@ def main(argv):
   # Store CLI args
   project_id = args.project_id
   ga_dataset = args.ga_dataset
-  ga_table = args.ga_table
 
   # Construct table references
-  ga_table_ref = "{}.{}.{}_*".format(project_id,ga_dataset,ga_table)
+  ga_table_ref = "{}.{}.ga_sessions_*".format(project_id,ga_dataset)
   feature_set_table_ref = "{}.{}.{}".format(project_id,ga_dataset,feature_set_table)
-  full_model_name = "{}.{}".format(ga_dataset,model_name)
+  full_model_name = "{}.{}.{}".format(project_id,ga_dataset,model_name)
 
   # Construct a BigQuery client object.
   client = bigquery.Client(project=project_id)

@@ -59,8 +59,8 @@ stored your GA export data (This should be a set of partitioned tables. The
 script is already set up to pass in a wildcard so that it will read in all the
 partitioned tables)
 
-Then, run this command in Cloud Shell: `python3 create_queries.py [project_id]
-[ga_dataset] [ga_table_prefix]`
+Then, run this command in Cloud Shell: `python3 create_and_run_queries.py [project_id]
+[ga_dataset]`
 
 For more advanced usage you can modify the script (for example, to use custom
 parameters). Simply edit the parameters at the beginning of the file.
