@@ -42,8 +42,11 @@ Alternatively, you can use publicly available data by following the directions [
 #### Modify the queries (optional)
 
 Because this code was made to work with any GA360 implementation, there is no
-site-specific behavior captured; similarly, this relies on eCommerce transactions
-as the behavior of interest, which may not be the ideal use case for all marketers.
+site-specific behavior captured; similarly, this relies on eCommerce 
+transactions as the behavior of interest (also known as our label or the 
+behavior we are trying to predict), which may not be the ideal use case for all
+marketers. Becuase of this, it's recommended that you review the label to 
+ensure it reflects the behavior you are trying to predict. 
 
 Here are some suggested additions that can be made to the feature set:
 - Custom dimensions and metrics
