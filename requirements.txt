@@ -1,4 +1,4 @@
 beautifulsoup4==4.9.1
-google==3.0.0
+google-cloud-bigquery==1.27.2
 pkg-resources==0.0.0
 soupsieve==2.0.1
