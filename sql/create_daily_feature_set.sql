@@ -1,4 +1,4 @@
--- Find users that visited yesterday to score
+-- Find users that visited in the last N days to score
 WITH visitors_to_update as (
     select clientId, most_recent_visit
     from (
